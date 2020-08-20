@@ -1,0 +1,134 @@
+<!--Comando para preencher com a estrutura do html => "!" -->
+<!--Live server(extensão) => Atualiza a página automaticamente-->
+<!DOCTYPE html> <!--Informa aos navegadores que este arquivo é do tipo HTML!-->
+<html lang="pt_br"><!--lang => é um atributo!-->
+<head> <!-- Configurações do documento!-->
+    <meta charset="UTF-8"> <!--charset => tipo de texto-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#8257E5">
+    
+    <title>Proffy</title>
+    <link rel="shorcut icon" href="/images/favicon.png" type="image/png"> <!--Icone da barra de navegação-->
+
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/partials/forms.css">
+
+    <link rel="stylesheet" href="/styles/partials/header.css"> <!--Link para o CSS cabeçalho-->
+    <link rel="stylesheet" href="/styles/partials/page-give-classes.css"> <!--Link para o CSS-->
+
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700&amp;family=Poppins:wght@400;600&amp;display=swap" rel="stylesheet">
+    
+    <script src="/scripts/addField.js" defer></script> <!--Defer: Ler script ao final de carregar a página(ler HTML)-->
+</head>
+
+<body id="page-give-classes"> <!--Todo conteúdo visivel da página deverá vir na tag body!-->
+
+    <div id="container">
+        <header class="page-header">
+            <div class="top-bar-container">
+                <a href="/">
+                    <img src="/images/icons/back.svg" alt="Voltar">
+                </a>
+                <img src="/images/logo.svg" alt="Proffy">
+            </div>
+            <div class="header-content">
+                <strong>Que incrível que você quer dar aulas.</strong>
+                <p>Primeiro passo é preencher este formulário de inscrição.</p>
+                
+            </div>
+        </header>
+        <main>
+            <form action="/save-classes" id="create-class" method="POST">
+                <fieldset>
+                    <legend>Seus dados</legend>
+                
+                    <div class="input-block">
+                        <label for="name">Nome Completo</label>
+                        <input name="name" id="name" required>
+                    </div>
+
+                    <div class="input-block">
+                        <label for="avatar">Link da sua foto<small>(comece com https://)</small></label>
+                        <input name="avatar" id="avatar" type="url" required>
+                    </div>
+
+                    <div class="input-block">
+                        <label for="whatsapp">WhatsApp <small>(somento números)</small> </label>
+                        <input name="whatsapp" id="whatsapp" type="number" required>
+                    </div>
+
+                    <div class="textarea-block">
+                        <label for="bio">Biografia</label>
+                        <textarea name="bio" id="bio" required></textarea>
+                    </div>
+
+                </fieldset>
+
+                <fieldset>
+                    <legend>Sobre a aula</legend>
+                    <div class="select-block">
+                        <label for="subject">Matéria</label>
+                        <select name="subject" id="subject">
+                            <option value="">Selecione uma opção</option>
+                            {%for subject in subjects %} <!--nunjucks-->
+                                <option value= "{{loop.index}}"> 
+                                    {{subject}}
+                                </option>
+                            {%endfor%}
+                        </select>
+                    </div>
+                    <div class="input-block">
+                        <label for="cost">Custo da sua hora/aula <small>(R$)</small></label>
+                        <input type="number" name="cost" id="cost">
+                    </div>
+                </fieldset>
+
+                <fieldset id="schedule-items">
+                    <legend>
+                        Horários disponíveis
+                        <button id="add-time" type="button">+ Novo Horário</button>
+                    </legend>
+                    
+
+                    <div class="schedule-item">
+                        <div class="select-block">
+                            <label for="weekday">Dia da semana</label>
+                            <select name="weekday[]" required>
+                                <option value="">Selecione uma opção</option>
+                                {%for weekday in weekdays %} <!--nunjucks-->
+                                    <option value= "{{loop.index0}}" > 
+                                        {{weekday}}
+                                    </option>
+                                {%endfor%}
+                            </select>
+                        </div>
+
+                        <div class="input-block">
+                            <label for="time_from">Das</label>
+                            <input type="time" name="time_from[]" required>
+                        </div>
+                        <div class="input-block">
+                            <label for="time_to">Até</label>
+                            <input type="time" name="time_to[]" required>
+                        </div>
+                    </div>
+                    
+                </fieldset>
+            </form>
+            <footer>
+                <p>
+                    <img src="/images/icons/warning.svg" alt="Aviso Importante">
+                    Importante! <br>
+                    Preencha todos os dados
+                </p>
+                <button type="submit" form="create-class">Salvar cadastro</button>
+            </footer>
+        </main>
+    </div>
+    <!--
+    <script>//Scripts devem ser inseridos ao final da página HTMl, pois o código HTML é lido linha por linha (e os scripst não possuem Hoisting)
+        document.querySelector("#container").style.backgroundColor = "red";
+    </script>
+    -->
+</body>
+</html>
